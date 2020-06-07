@@ -1,6 +1,6 @@
 //Main configuration. Silahkan sesuaikan settingan dibawah ini sesuai. Baca komentar dibelakangnya
 const nama_instansi = 'RSUD H. Damanhuri'; // Hospital Name
-const apiUrl = 'https://basoro.id/pasien-rest/'; // API Server URL
+const apiUrl = 'https://rsudcipayung.jakarta.go.id/pasien-rest/'; // API Server URL
 const startDate = -1; // Start date of day for registration
 const endDate = 7; // End date of day for registration
 const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
