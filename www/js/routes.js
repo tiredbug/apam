@@ -4,6 +4,10 @@ routes = [
     url: './index.html',
   },
   {
+    path: '/about/',
+    url: './pages/about.html',
+  },
+  {
     path: '/signin/',
     url: './pages/signin.html',
   },
@@ -16,6 +20,14 @@ routes = [
     url: './pages/home.html',
   },
   {
+    path: '/blog/',
+    url: './pages/blog.html',
+  },
+  {
+    path: '/blog/:id/',
+    url: './pages/blog-detail.html',
+  },
+  {
     path: '/daftar/',
     url: './pages/daftar.html',
   },
@@ -26,6 +38,22 @@ routes = [
   {
     path: '/dokter/',
     url: './pages/dokter.html',
+  },
+  {
+    path: '/rawatjalan/',
+    url: './pages/rawatjalan.html',
+  },
+  {
+    path: '/rawatinap/',
+    url: './pages/rawatinap.html',
+  },
+  {
+    path: '/laboratorium/',
+    url: './pages/laboratorium.html',
+  },
+  {
+    path: '/radiologi/',
+    url: './pages/radiologi.html',
   },
   {
     path: '/pengaduan/',
@@ -44,10 +72,6 @@ routes = [
     url: './pages/riwayat-detail.html',
   },
   {
-    path: '/bantuan/',
-    url: './pages/bantuan.html',
-  },
-  {
     path: '/profil/',
     url: './pages/profil.html',
   },
@@ -55,7 +79,19 @@ routes = [
     path: '/sukses/',
     url: './pages/sukses.html',
   },
-
+  {
+    path: '/profile/',
+    url: './pages/profile.html',
+  },
+  {
+    path: '/notifikasi/',
+    url: './pages/notifikasi.html',
+  },
+  // Color Themes
+  {
+    path: '/pengaturan/',
+    componentUrl: './pages/pengaturan.html',
+  },
   // Default route (404 page). MUST BE THE LAST
   {
     path: '(.*)',
