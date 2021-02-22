@@ -19,7 +19,7 @@
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
     <plugin name="cordova-plugin-network-information" spec="2.0.1" />
     <preference name="android-minSdkVersion" value="21" />
-    <preference name="android-targetSdkVersion" value="28"/>
+    <preference name="android-targetSdkVersion" value="29"/>
     <preference name="phonegap-version" value="cli-9.0.0" />
     <preference name="ShowSplashScreenSpinner" value="false"/>
     <preference name="SplashMaintainAspectRatio" value="true" />
