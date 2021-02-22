@@ -46,9 +46,6 @@ var app  = new Framework7({
   actions: {
     closeOnEscape: true,
   },
-  vi: {
-    placementId: 'pltd4o7ibb9rc653x14',
-  },
   // App routes
   routes: routes,
 });
@@ -1723,7 +1720,7 @@ $$(document).on('page:init', '.page[data-name="pengaturan"]', function(e) {
 
   $$('select[name="color"]').on('change', function () {
     localStorage.setItem("color", this.value);
-    $$('.view').removeClass('color-theme-red color-theme-blue color-theme-lightblue color-theme-green color-theme-pink color-theme-orange color-theme-deeporange color-theme-yellow color-theme-lime color-theme-teal color-theme-purple color-theme-deeppurple color-theme-gray color-theme-black');
+    $$('.view').removeClass('color-theme-default color-theme-red color-theme-blue color-theme-lightblue color-theme-green color-theme-pink color-theme-orange color-theme-deeporange color-theme-yellow color-theme-lime color-theme-teal color-theme-purple color-theme-deeppurple color-theme-gray color-theme-black');
     $$('.view').addClass(this.value);
   });
 
