@@ -300,7 +300,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function(e) {
           }
         }
       });
-      //clearInterval(notifikasi);
+      clearInterval(notifikasi);
     }, 3000);
 
     var notifikasi = setInterval(function () {
