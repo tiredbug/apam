@@ -303,7 +303,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function(e) {
       clearInterval(notifikasi);
     }, 3000);
 
-    var notifikasi = setInterval(function () {
+    var hitungralan = setInterval(function () {
       app.request.post(apiUrl + 'apam/', {
         action: 'hitungralan',
         no_rkm_medis: no_rkm_medis,
@@ -314,7 +314,7 @@ $$(document).on('page:init', '.page[data-name="home"]', function(e) {
       //clearInterval(notifikasi);
     }, 3000);
 
-    var notifikasi = setInterval(function () {
+    var hitungranap = setInterval(function () {
       app.request.post(apiUrl + 'apam/', {
         action: 'hitungranap',
         no_rkm_medis: no_rkm_medis,
