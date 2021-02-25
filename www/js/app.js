@@ -294,15 +294,6 @@ $$(document).on('page:init', '.page[data-name="home"]', function(e) {
               closeOnClick: true,
               on: {
                 close: function () {
-                  //app.dialog.alert('Notification closed');
-                  //mainView.router.navigate('/notifikasi/');
-                  /*app.request.post(apiUrl + 'apam/', {
-                    action: 'tandaisudahdibacasemua',
-                    no_rkm_medis: no_rkm_medis,
-                    token: token
-                  }, function (data) {
-                    //app.dialog.alert('Notifikasi ' + judul + ' sudah dibaca..!');
-                  });*/
                 },
               },
             }).open();
