@@ -11,12 +11,6 @@ const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
 // Dom7
 var $$ = Dom7;
 
-// Theme
-var theme = 'auto';
-if (document.location.search.indexOf('theme=') >= 0) {
-  theme = document.location.search.split('theme=')[1].split('&')[0];
-}
-
 // Framework7 App main instance
 var app  = new Framework7({
   root: '#app', // App root element
@@ -30,10 +24,7 @@ var app  = new Framework7({
   statusbar: {
     iosOverlaysWebview: true,
   },
-  theme: theme,
-  debugger: false,
-  cache: false,
-  routes: routes,
+  theme: 'auto',
   // App routes
   routes: routes,
 });
