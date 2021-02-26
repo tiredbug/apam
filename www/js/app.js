@@ -1,7 +1,8 @@
 //Main configuration. Silahkan sesuaikan settingan dibawah ini sesuai. Baca komentar dibelakangnya
 const nama_instansi = 'RS Masa Kini'; // Hospital Name
 const apiUrl = 'https://khanza.basoro.id/api/'; // API Server URL
-const website_upload = 'https://khanza.basoro.id/uploads/'; // API Server URL
+const website_upload = 'https://khanza.basoro.id/uploads/'; // Website Uploads Server URL
+const webapps_url = 'http://khanza.basoro.id/webapps/'; // Webapps Server URL
 const token = 'qtbexUAxzqO3M8dCOo2vDMFvgYjdUEdMLVo341'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
@@ -9,12 +10,6 @@ const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
 
 // Dom7
 var $$ = Dom7;
-
-// Theme
-var theme = 'auto';
-if (document.location.search.indexOf('theme=') >= 0) {
-  theme = document.location.search.split('theme=')[1].split('&')[0];
-}
 
 // Framework7 App main instance
 var app  = new Framework7({
@@ -29,41 +24,9 @@ var app  = new Framework7({
   statusbar: {
     iosOverlaysWebview: true,
   },
-  theme: theme,
-  debugger: false,
-  cache: false,
-  routes: routes,
-  popup: {
-    closeOnEscape: true,
-  },
-  sheet: {
-    closeOnEscape: true,
-	//closeByBackdropClick: true,
-  },
-  popover: {
-    closeOnEscape: true,
-  },
-  actions: {
-    closeOnEscape: true,
-  },
-  vi: {
-    placementId: 'pltd4o7ibb9rc653x14',
-  },
+  theme: 'auto',
   // App routes
   routes: routes,
-});
-
-setTimeout(function () {
-    $$('.loader-screen').hide();
-}, 2000);
-
-// Option 1. Using one 'page:init' handler for all pages
-$$(document).on('page:init', function (e) {
-  app.panel.close();
-});
-
-app.on('orientationchange', function (e) {
-  app.off(e);
 });
 
 // Init/Create main view
@@ -109,6 +72,11 @@ if (debug == '1') {
       var page = app.views.main.router.currentPageEl.dataset.name;
       app.dialog.close();
       if (page === 'landing') {
+        app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
+          navigator.app.clearHistory();
+          navigator.app.exitApp();
+        })
+      } else if (page === 'signin') {
         app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
           navigator.app.clearHistory();
           navigator.app.exitApp();
@@ -1006,6 +974,33 @@ $$(document).on('page:init', '.page[data-name="riwayatdetail"]', function(e) {
       html += '  <div class="card-content">' + data[i]['nama_brng'] + '</div>';
       html += '</div>';
 
+      html += '<div class="block-title">Pemeriksaan Laboratorium</div>';
+      html += '<div class="card padding">';
+      if(data[i]['pemeriksaan_lab'] == '') {
+        html += '  <div class="card-content">null</div>';
+      } else {
+        html += '  <div class="card-content">' + data[i]['pemeriksaan_lab'] + '</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="block-title">Pemeriksaan Radiologi</div>';
+      html += '<div class="card padding">';
+      if(data[i]['hasil_radiologi'] == '') {
+        html += '  <div class="card-content">null</div>';
+      } else {
+        html += '  <div class="card-content">' + data[i]['hasil_radiologi'] + '</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="block-title">Hasil Radiologi</div>';
+      html += '<div class="card padding">';
+      if(data[i]['gambar_radiologi'] == null) {
+        html += '  <div class="card-content">' + data[i]['gambar_radiologi'] + '</div>';
+      } else {
+        html += '  <div class="card-content"><img src="' + webapps_url + 'radiologi/' + data[i]['gambar_radiologi'] + '" width="100%"/></div>';
+      }
+      html += '</div>';
+
     }
 
     $$(".riwayat-detail").html(html);
@@ -1102,6 +1097,33 @@ $$(document).on('page:init', '.page[data-name="riwayatranap-detail"]', function(
       html += '<div class="block-title">Resep Obat</div>';
       html += '<div class="card padding">';
       html += '  <div class="card-content">' + data[i]['nama_brng'] + '</div>';
+      html += '</div>';
+
+      html += '<div class="block-title">Pemeriksaan Laboratorium</div>';
+      html += '<div class="card padding">';
+      if(data[i]['pemeriksaan_lab'] == '') {
+        html += '  <div class="card-content">null</div>';
+      } else {
+        html += '  <div class="card-content">' + data[i]['pemeriksaan_lab'] + '</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="block-title">Pemeriksaan Radiologi</div>';
+      html += '<div class="card padding">';
+      if(data[i]['hasil_radiologi'] == '') {
+        html += '  <div class="card-content">null</div>';
+      } else {
+        html += '  <div class="card-content">' + data[i]['hasil_radiologi'] + '</div>';
+      }
+      html += '</div>';
+
+      html += '<div class="block-title">Hasil Radiologi</div>';
+      html += '<div class="card padding">';
+      if(data[i]['gambar_radiologi'] == null) {
+        html += '  <div class="card-content">' + data[i]['gambar_radiologi'] + '</div>';
+      } else {
+        html += '  <div class="card-content"><img src="' + webapps_url + 'radiologi/' + data[i]['gambar_radiologi'] + '" width="100%"/></div>';
+      }
       html += '</div>';
 
     }
