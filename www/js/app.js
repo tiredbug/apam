@@ -29,6 +29,19 @@ var app  = new Framework7({
   routes: routes,
 });
 
+setTimeout(function () {
+    $$('.loader-screen').hide();
+}, 2000);
+
+// Option 1. Using one 'page:init' handler for all pages
+$$(document).on('page:init', function (e) {
+  app.panel.close();
+});
+
+app.on('orientationchange', function (e) {
+  app.off(e);
+});
+
 // Init/Create main view
 var mainView = app.views.create('.view-main', {
   url: '/'
@@ -40,47 +53,50 @@ var layout = localStorage.getItem("layout");
 var color = localStorage.getItem("color");
 
 
-document.addEventListener('deviceready', appReady, false);
-function appReady(){
-  document.addEventListener("offline", onOffline, false);
-  function onOffline() {
-    window.location = "offline.html";
-  }
+if (debug == '1') {
   if (no_rkm_medis) {
     mainView.router.navigate('/home/', {
       clearPreviousHistory: true
     });
   }
-  if (layout) {
-    $$('.view').addClass(layout);
-  }
-  if (color) {
-    $$('.view').addClass(color);
-  }
-  document.addEventListener('resume', function(){
-    ga('send', 'pageview' , {'location' : 'http://api.rshdbarabai.com/pasien-rest/index.html' });
-  }, false);
-  document.addEventListener('backbutton', onBackKeyDown.bind(this), false);
-  function onBackKeyDown() {
-    var page = app.views.main.router.currentPageEl.dataset.name;
-    app.dialog.close();
-    if (page === 'landing') {
-      app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
-        navigator.app.clearHistory();
-        navigator.app.exitApp();
-      })
-    } else if (page === 'signin') {
-      app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
-        navigator.app.clearHistory();
-        navigator.app.exitApp();
-      })
-    } else if (page === 'home') {
-      app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
-        navigator.app.clearHistory();
-        navigator.app.exitApp();
-      })
-    } else {
-      mainView.router.back();
+} else {
+  document.addEventListener('deviceready', appReady, false);
+  function appReady(){
+    document.addEventListener("offline", onOffline, false);
+    function onOffline() {
+      window.location = "offline.html";
+    }
+    if (no_rkm_medis) {
+      mainView.router.navigate('/home/', {
+        clearPreviousHistory: true
+      });
+    }
+    if (layout) {
+      $$('.view').addClass(layout);
+    }
+    if (color) {
+      $$('.view').addClass(color);
+    }
+    document.addEventListener('resume', function(){
+      ga('send', 'pageview' , {'location' : 'http://api.rshdbarabai.com/pasien-rest/index.html' });
+    }, false);
+    document.addEventListener('backbutton', onBackKeyDown.bind(this), false);
+    function onBackKeyDown() {
+      var page = app.views.main.router.currentPageEl.dataset.name;
+      app.dialog.close();
+      if (page === 'landing') {
+        app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
+          navigator.app.clearHistory();
+          navigator.app.exitApp();
+        })
+      } else if (page === 'home') {
+        app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
+          navigator.app.clearHistory();
+          navigator.app.exitApp();
+        })
+      } else {
+        mainView.router.back();
+      }
     }
   }
 }
