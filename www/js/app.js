@@ -34,37 +34,8 @@ var app  = new Framework7({
   debugger: false,
   cache: false,
   routes: routes,
-  popup: {
-    closeOnEscape: true,
-  },
-  sheet: {
-    closeOnEscape: true,
-	//closeByBackdropClick: true,
-  },
-  popover: {
-    closeOnEscape: true,
-  },
-  actions: {
-    closeOnEscape: true,
-  },
-  vi: {
-    placementId: 'pltd4o7ibb9rc653x14',
-  },
   // App routes
   routes: routes,
-});
-
-setTimeout(function () {
-    $$('.loader-screen').hide();
-}, 2000);
-
-// Option 1. Using one 'page:init' handler for all pages
-$$(document).on('page:init', function (e) {
-  app.panel.close();
-});
-
-app.on('orientationchange', function (e) {
-  app.off(e);
 });
 
 // Init/Create main view
@@ -110,6 +81,11 @@ if (debug == '1') {
       var page = app.views.main.router.currentPageEl.dataset.name;
       app.dialog.close();
       if (page === 'landing') {
+        app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
+          navigator.app.clearHistory();
+          navigator.app.exitApp();
+        })
+      } else if (page === 'signin') {
         app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
           navigator.app.clearHistory();
           navigator.app.exitApp();
