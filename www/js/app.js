@@ -75,7 +75,6 @@ var color = localStorage.getItem("color");
 
 
 if (debug == '1') {
-  app.dialog.alert('Ini debug');
   if (no_rkm_medis) {
     mainView.router.navigate('/home/', {
       clearPreviousHistory: true
@@ -83,12 +82,9 @@ if (debug == '1') {
   }
 } else {
   document.addEventListener('deviceready', appReady, false);
-  app.dialog.alert('Ini bukan debug');
   function appReady(){
-    app.dialog.alert('Ini appReady');
     document.addEventListener("offline", onOffline, false);
     function onOffline() {
-      app.dialog.alert('Ini offline');
       window.location = "offline.html";
     }
     if (no_rkm_medis) {
@@ -107,23 +103,19 @@ if (debug == '1') {
     }, false);
     document.addEventListener('backbutton', onBackKeyDown.bind(this), false);
     function onBackKeyDown() {
-      app.dialog.alert('Ini onBackKeyDown');
       var page = app.views.main.router.currentPageEl.dataset.name;
       app.dialog.close();
       if (page === 'landing') {
-        app.dialog.alert('Ini landing');
         app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
           navigator.app.clearHistory();
           navigator.app.exitApp();
         })
       } else if (page === 'home') {
-        app.dialog.alert('Ini home');
         app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
           navigator.app.clearHistory();
           navigator.app.exitApp();
         })
       } else {
-        app.dialog.alert('Ini back');
         mainView.router.back();
       }
     }
