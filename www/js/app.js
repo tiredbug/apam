@@ -6,16 +6,10 @@ const webapps_url = 'http://khanza.basoro.id/webapps/'; // Webapps Server URL
 const token = 'qtbexUAxzqO3M8dCOo2vDMFvgYjdUEdMLVo341'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
-const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
+const debug = 1; // Ganti menjadi 0 sebelum build di phonegap.com
 
 // Dom7
 var $$ = Dom7;
-
-// Theme
-var theme = 'auto';
-if (document.location.search.indexOf('theme=') >= 0) {
-  theme = document.location.search.split('theme=')[1].split('&')[0];
-}
 
 // Framework7 App main instance
 var app  = new Framework7({
@@ -30,26 +24,7 @@ var app  = new Framework7({
   statusbar: {
     iosOverlaysWebview: true,
   },
-  theme: theme,
-  debugger: false,
-  cache: false,
-  routes: routes,
-  popup: {
-    closeOnEscape: true,
-  },
-  sheet: {
-    closeOnEscape: true,
-	//closeByBackdropClick: true,
-  },
-  popover: {
-    closeOnEscape: true,
-  },
-  actions: {
-    closeOnEscape: true,
-  },
-  vi: {
-    placementId: 'pltd4o7ibb9rc653x14',
-  },
+  theme: 'auto',
   // App routes
   routes: routes,
 });
@@ -61,10 +36,6 @@ setTimeout(function () {
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
   app.panel.close();
-});
-
-app.on('orientationchange', function (e) {
-  app.off(e);
 });
 
 // Init/Create main view
@@ -1189,6 +1160,14 @@ $$(document).on('page:init', '.page[data-name="profil"]', function(e) {
   qr.addData(no_rkm_medis);
   qr.make();
   document.getElementById('qrKartuVirtual').innerHTML = qr.createImgTag(cellSize, margin);
+
+  $$('.add-shadow').on('click', function (e) {
+      $$('.profil').addClass('no-shadow');
+  });
+
+  $$('.remove-shadow').on('click', function (e) {
+      $$('.profil').removeClass('no-shadow');
+  });
 
   //Getting user information
   app.dialog.preloader('Loading...');
