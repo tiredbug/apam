@@ -33,6 +33,11 @@ setTimeout(function () {
     $$('.loader-screen').hide();
 }, 2000);
 
+// Option 1. Using one 'page:init' handler for all pages
+$$(document).on('page:init', function (e) {
+  app.panel.close();
+});
+
 // Init/Create main view
 var mainView = app.views.create('.view-main', {
   url: '/'
