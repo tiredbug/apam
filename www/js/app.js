@@ -6,7 +6,7 @@ const webapps_url = 'http://khanza.basoro.id/webapps/'; // Webapps Server URL
 const token = 'qtbexUAxzqO3M8dCOo2vDMFvgYjdUEdMLVo341'; // Token code for security purpose
 const startDate = 1; // Start date of day for registration
 const endDate = 7; // End date of day for registration
-const debug = 1; // Ganti menjadi 0 sebelum build di phonegap.com
+const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
 
 // Dom7
 var $$ = Dom7;
