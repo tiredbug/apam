@@ -11,6 +11,12 @@ const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
 // Dom7
 var $$ = Dom7;
 
+// Theme
+var theme = 'auto';
+if (document.location.search.indexOf('theme=') >= 0) {
+  theme = document.location.search.split('theme=')[1].split('&')[0];
+}
+
 // Framework7 App main instance
 var app  = new Framework7({
   root: '#app', // App root element
@@ -24,7 +30,22 @@ var app  = new Framework7({
   statusbar: {
     iosOverlaysWebview: true,
   },
-  theme: 'auto',
+  theme: theme,
+  debugger: false,
+  cache: false,
+  popup: {
+    closeOnEscape: true,
+  },
+  sheet: {
+    closeOnEscape: true,
+	//closeByBackdropClick: true,
+  },
+  popover: {
+    closeOnEscape: true,
+  },
+  actions: {
+    closeOnEscape: true,
+  },
   // App routes
   routes: routes,
 });
@@ -36,6 +57,10 @@ setTimeout(function () {
 // Option 1. Using one 'page:init' handler for all pages
 $$(document).on('page:init', function (e) {
   app.panel.close();
+});
+
+app.on('orientationchange', function (e) {
+  app.off(e);
 });
 
 // Init/Create main view
@@ -50,6 +75,7 @@ var color = localStorage.getItem("color");
 
 
 if (debug == '1') {
+  app.dialog.alert('Ini debug');
   if (no_rkm_medis) {
     mainView.router.navigate('/home/', {
       clearPreviousHistory: true
@@ -57,9 +83,12 @@ if (debug == '1') {
   }
 } else {
   document.addEventListener('deviceready', appReady, false);
+  app.dialog.alert('Ini bukan debug');
   function appReady(){
+    app.dialog.alert('Ini appReady');
     document.addEventListener("offline", onOffline, false);
     function onOffline() {
+      app.dialog.alert('Ini offline');
       window.location = "offline.html";
     }
     if (no_rkm_medis) {
@@ -78,19 +107,23 @@ if (debug == '1') {
     }, false);
     document.addEventListener('backbutton', onBackKeyDown.bind(this), false);
     function onBackKeyDown() {
+      app.dialog.alert('Ini onBackKeyDown');
       var page = app.views.main.router.currentPageEl.dataset.name;
       app.dialog.close();
       if (page === 'landing') {
+        app.dialog.alert('Ini landing');
         app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
           navigator.app.clearHistory();
           navigator.app.exitApp();
         })
       } else if (page === 'home') {
+        app.dialog.alert('Ini home');
         app.dialog.confirm('Anda yakin ingin menutup aplikasi APAM?', function () {
           navigator.app.clearHistory();
           navigator.app.exitApp();
         })
       } else {
+        app.dialog.alert('Ini back');
         mainView.router.back();
       }
     }
@@ -1160,14 +1193,6 @@ $$(document).on('page:init', '.page[data-name="profil"]', function(e) {
   qr.addData(no_rkm_medis);
   qr.make();
   document.getElementById('qrKartuVirtual').innerHTML = qr.createImgTag(cellSize, margin);
-
-  $$('.add-shadow').on('click', function (e) {
-      $$('.profil').addClass('no-shadow');
-  });
-
-  $$('.remove-shadow').on('click', function (e) {
-      $$('.profil').removeClass('no-shadow');
-  });
 
   //Getting user information
   app.dialog.preloader('Loading...');
