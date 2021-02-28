@@ -1735,7 +1735,6 @@ p {
       content: none; }
   .navbar-style-1.navbar .navbar-inner .link {
     padding: 0 15px 0 10px;
-    color: var(--f7-theme-color);
     min-width: 24px; }
   .navbar-style-1.navbar .navbar-inner .title {
     opacity: 1 !important;
