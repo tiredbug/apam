@@ -2,6 +2,7 @@
 const nama_instansi = 'RS Aura Syifa Kediri'; // Hospital Name
 const apiUrl = 'https://mlite.rsaurasyifa.com/api/'; // API Server URL
 const website_upload = 'https://mlite.rsaurasyifa.cpm/uploads/'; // API Server URL
+const webapps_url = 'https://simrs.rsaurasyifa.cpm/webapps/'; // API Server URL
 const token = '5ur4d1r4j4y4ningratl3burd3ningpangastut1'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
