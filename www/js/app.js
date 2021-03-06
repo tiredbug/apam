@@ -1,9 +1,9 @@
 //Main configuration. Silahkan sesuaikan settingan dibawah ini sesuai. Baca komentar dibelakangnya
-const nama_instansi = 'RS Masa Kini'; // Hospital Name
-const apiUrl = 'https://khanza.basoro.id/api/'; // API Server URL
-const website_upload = 'https://khanza.basoro.id/uploads/'; // Website Uploads Server URL
-const webapps_url = 'http://khanza.basoro.id/webapps/'; // Webapps Server URL
-const token = 'qtbexUAxzqO3M8dCOo2vDMFvgYjdUEdMLVo341'; // Token code for security purpose
+const nama_instansi = 'RS Aura Syifa Kediri'; // Hospital Name
+const apiUrl = 'https://mlite.rsaurasyifa.com/api/'; // API Server URL
+const website_upload = 'https://mlite.rsaurasyifa.cpm/uploads/'; // API Server URL
+const webapps_url = 'https://simrs.rsaurasyifa.cpm/webapps/'; // API Server URL
+const token = '5ur4d1r4j4y4ningratl3burd3ningpangastut1'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
 const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
@@ -1524,6 +1524,9 @@ $$(document).on('page:init', '.page[data-name="daftar"]', function(e) {
 
         if(data.state == "duplication") {
           app.dialog.alert('Anda sudah terdaftar ditanggal pilihan anda.');
+        }
+        else if(data.state == "limit") {
+          app.dialog.alert('Kuota pendaftaran terpenuhi. Silahkan pilih hari/tanggal lain.');
         }
         else if(data.state == "success") {
           mainView.router.navigate('/sukses/', {
