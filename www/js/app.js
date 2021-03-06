@@ -6,7 +6,7 @@ const webapps_url = 'https://simrs.rsaurasyifa.cpm/webapps/'; // API Server URL
 const token = '5ur4d1r4j4y4ningratl3burd3ningpangastut1'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
-const debug = 1; // Ganti menjadi 0 sebelum build di phonegap.com
+const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
 
 // Dom7
 var $$ = Dom7;
@@ -1518,7 +1518,7 @@ $$(document).on('page:init', '.page[data-name="daftar"]', function(e) {
         kd_pj: kd_pj,
         token: token
       }, function (data) {
-        console.log(data);
+        //console.log(data);
         app.dialog.close();
         data = JSON.parse(data);
 
