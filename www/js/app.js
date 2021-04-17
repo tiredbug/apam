@@ -6,7 +6,7 @@ const webapps_url = 'https://khanza.basoro.id/webapps/'; // Webapps Server URL
 const token = 'qtbexUAxzqO3M8dCOo2vDMFvgYjdUEdMLVo341'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
-const debug = 0; // Ganti menjadi 0 sebelum build di phonegap.com
+const debug = 1; // Ganti menjadi 0 sebelum build di phonegap.com
 
 // Dom7
 var $$ = Dom7;
@@ -729,6 +729,268 @@ $$(document).on('page:init', '.page[data-name="notifikasi"]', function(e) {
       }, function (data) {
         app.dialog.alert('Notifikasi ' + judul + ' sudah dibaca..!');
       });
+  });
+
+});
+
+//=================================================//
+// Load data untuk halaman notifikasi.html               //
+//=================================================//
+
+$$(document).on('page:init', '.page[data-name="telemedicine__"]', function(e) {
+
+  var no_rkm_medis = localStorage.getItem("no_rkm_medis");
+
+  //Getting Dokter list
+  app.dialog.preloader('Loading...');
+  app.request.post(apiUrl + 'apam/', {
+    action: 'telemedicine',
+    no_rkm_medis: no_rkm_medis,
+    token: token
+  }, function (data) {
+    //console.log(data);
+    app.dialog.close();
+    data = JSON.parse(data);
+
+    var html = '';
+    for(i=0; i<data.length; i++) {
+      html += '<li>';
+      html += '  <a href="/telemedicine/' + data[i]['kd_dokter'] + '/' + data[i]['kd_poli'] + '/" class="item-link item-content">';
+      html += '    <div class="item-media"><img src="img/' + data[i]['jk'] + '.png" width="50"></div>';
+      html += '    <div class="item-inner">';
+      html += '      <div class="item-title-row">';
+      html += '        <div class="item-title">' + data[i]['nm_dokter'] + '</div>';
+      html += '      </div>';
+      html += '      <div class="item-text">' + data[i]['nm_poli'] + '</div>';
+      html += '      <div class="item-subtitle">' + data[i]['jam_mulai'] + ' - ' + data[i]['jam_selesai'] + '</div>';
+      html += '    </div>';
+      html += '  </a>';
+      html += '</li>';
+    }
+
+    $$(".telemedicine-list").html(html);
+  });
+
+});
+
+$$(document).on('page:init', '.page[data-name="telemedicine"]', function(e) {
+
+  var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus' , 'September' , 'Oktober', 'November', 'Desember'];
+  var dayNamesShort = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+
+  var calendarDokter = app.calendar.create({
+    inputEl: '#dokter-calendar',
+    closeOnSelect: true,
+    weekHeader: true,
+    dateFormat: 'yyyy-mm-dd',
+    dayNamesShort: dayNamesShort,
+    monthNames: monthNames,
+    on: {
+      closed: function () {
+        var tanggal = $$('#dokter-calendar').val();
+        //console.log('Calendar closed ' + tanggal + 'isinya')
+        //Getting History list
+        app.dialog.preloader("Loading...");
+        app.request.post(apiUrl + 'apam/', {
+          action: 'telemedicine',
+          tanggal: tanggal,
+          no_rkm_medis: no_rkm_medis,
+          token: token
+        }, function (data) {
+          app.dialog.close();
+          data = JSON.parse(data);
+
+          var html = '';
+          if(data.state == "notfound") {
+            html += '<li><div class="item-content">Tidak ada jadwal dokter hari ini</div></li>';
+          } else {
+            for(i=0; i<data.length; i++) {
+              html += '<li>';
+              html += '  <a href="/telemedicine/' + no_rkm_medis + '/' + tanggal + '/' + data[i]['kd_poli'] + '/' + data[i]['nm_poli'] + '/' + data[i]['kd_dokter'] + '/' + data[i]['nm_dokter'] + '/" class="item-link item-content">';
+              html += '  <div class="item-media"><img src="img/' + data[i]['jk'] + '.png" width="44"></div>';
+              html += '  <div class="item-inner">';
+              html += '   <div class="item-title">';
+              html += '    <div class="item">' + data[i]['nm_poli'] + '</div>';
+              html += '    ' + data[i]['nm_dokter'] + '';
+              html += '    <div style="font-size:12px;">' + data[i]['jam_mulai'] + ' s/d ' + data[i]['jam_selesai'] + ' WITA</div>';
+              html += '   </div>';
+              html += '  </div>';
+              html += ' </a>';
+              html += '</li>';
+            }
+          }
+
+          $$(".telemedicine-list").html(html);
+
+        });
+      }
+    }
+  });
+
+  //Getting History list
+  app.dialog.preloader("Loading...");
+  var tanggal = new Date().getFullYear()+'-'+("0"+(new Date().getMonth()+1)).slice(-2)+'-'+("0"+new Date().getDate()).slice(-2);
+  //console.log('Get hari ini ' + today + 'bro isinya')
+  app.request.post(apiUrl + 'apam/', {
+    action: 'telemedicine',
+    tanggal: tanggal,
+    no_rkm_medis: no_rkm_medis,
+    token: token
+  }, function (data) {
+    app.dialog.close();
+    data = JSON.parse(data);
+    //console.log(data);
+    var html = '';
+    if(data.state == "notfound") {
+      html += '<li><div class="item-content">Tidak ada jadwal dokter hari ini</div></li>';
+    } else {
+      for(i=0; i<data.length; i++) {
+        //var kd_dokter = data[i]['kd_dokter'];
+        //console.log(kd_dokter);
+        html += '<li>';
+        html += '  <a href="/telemedicine/' + no_rkm_medis + '/' + tanggal + '/' + data[i]['kd_poli'] + '/' + data[i]['nm_poli'] + '/' + data[i]['kd_dokter'] + '/' + data[i]['nm_dokter'] + '/" class="item-link item-content">';
+        html += '  <div class="item-media"><img src="img/' + data[i]['jk'] + '.png" width="44"></div>';
+        html += '  <div class="item-inner">';
+        html += '   <div class="item-title">';
+        html += '    <div class="item">' + data[i]['nm_poli'] + '</div>';
+        html += '    ' + data[i]['nm_dokter'] + '';
+        html += '    <div style="font-size:12px;">' + data[i]['jam_mulai'] + ' s/d ' + data[i]['jam_selesai'] + ' WITA</div>';
+        html += '   </div>';
+        html += '  </div>';
+        html += ' </a>';
+        html += '</li>';
+      }
+    }
+
+    $$(".telemedicine-list").html(html);
+
+  });
+
+});
+
+//=================================================//
+// Load data untuk halaman booking-detail.html               //
+//=================================================//
+
+$$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e) {
+
+  var page = e.detail;
+  var no_rkm_medis = page.route.params.no_rkm_medis;
+  var tanggal = page.route.params.tanggal;
+  var kd_poli = page.route.params.kd_poli;
+  var nm_poli = page.route.params.nm_poli;
+  var kd_dokter = page.route.params.kd_dokter;
+  var nm_dokter = page.route.params.nm_dokter;
+
+  $$('#no_rkm_medis').val(no_rkm_medis);
+  $$('#tanggal').val(tanggal);
+  $$('#kd_poli').val(kd_poli);
+  $$('#nm_poli').val(nm_poli);
+  $$('#kd_dokter').val(kd_dokter);
+  $$('#nm_dokter').val(nm_dokter);
+
+  console.log(nm_dokter);
+
+  $$('.page[data-name="telemedicinedaftar"] .daftar-btn').on('click', function () {
+
+    //var no_rkm_medis = localStorage.getItem("no_rkm_medis");
+    //var tanggal = $$('#daftar-form .tanggal').val();
+    //var kd_poli = $$('#daftar-form .kd_poli').val();
+    //var kd_dokter = $$("input[name='kd_dokter']:checked").val();
+    var kd_pj = 'UMU';
+
+    if(no_rkm_medis == "") {
+      app.dialog.alert('Nomor rekam medis anda tidak sesuai dengan akun login.');
+    }
+    else if(tanggal == "") {
+      app.dialog.alert('Silahkan masukkan tanggal berobat.');
+    }
+    else if(kd_poli == "") {
+      app.dialog.alert('Pilih klinik tujuan anda.');
+    }
+    else if(kd_dokter == "") {
+      app.dialog.alert('Silahkan pilih dokter.');
+    }
+    else if(kd_pj == "") {
+      app.dialog.alert('Silahkan pilih cara bayar.');
+    }
+    else {
+      // Show Preloader
+      app.dialog.preloader("Loading...");
+
+      app.request.post(apiUrl + 'apam/', {
+        action: "telemedicinedaftar",
+        no_rkm_medis: no_rkm_medis,
+        tanggal: tanggal,
+        kd_poli: kd_poli,
+        kd_dokter: kd_dokter,
+        kd_pj: kd_pj,
+        token: token
+      }, function (data) {
+        console.log(data);
+        app.dialog.close();
+        data = JSON.parse(data);
+
+        if(data.state == "duplication") {
+          app.dialog.alert('Anda sudah terdaftar ditanggal pilihan anda.');
+        }
+        else if(data.state == "limit") {
+          app.dialog.alert('Kuota pendaftaran terpenuhi. Silahkan pilih hari/tanggal lain.');
+        }
+        else if(data.state == "success") {
+          mainView.router.navigate('/telemedicine-sukses/', {
+            clearPreviousHistory: true
+          });
+        }
+        else {
+          app.dialog.alert('Register error: ', data);
+        }
+      });
+    }
+
+  });
+
+});
+
+//=================================================//
+// Load data untuk halaman telemedicine-sukses.html               //
+//=================================================//
+
+$$(document).on('page:init', '.page[data-name="telemedicinesukses"]', function(e) {
+
+  var no_rkm_medis = localStorage.getItem("no_rkm_medis");
+
+  //Getting Booking Result
+  app.dialog.preloader("Loading...");
+  app.request.post(apiUrl + 'apam/', {
+    action: 'telemedicinesukses',
+    no_rkm_medis: no_rkm_medis,
+    token: token
+  }, function (data) {
+    app.dialog.close();
+    data = JSON.parse(data);
+    console.log(data);
+    var html = '';
+    for(i=0; i<data.length; i++) {
+      html += ' <div class="item-content">';
+      html += '  <div class="item-inner">';
+      html += '   <div class="item-title">';
+      html += '    Nomor Kartu Berobat: ' + no_rkm_medis + '';
+      html += '    <div class="item-header">Tanggal booking: ' + data[i]['tanggal_booking'] + '</div>';
+      html += '    <div class="item-header">Tanggal periksa: ' + data[i]['tanggal_periksa'] + '</div>';
+      html += '    <div class="item">Status booking: ' + data[i]['status'] + '</div>';
+      html += '    Klinik: ' + data[i]['nm_poli'] + '';
+      html += '    <div class="item">Dokter: ' + data[i]['nm_dokter'] + '</div>';
+      html += '    <div class="item">Nomor antrian: ' + data[i]['no_reg'] + '</div>';
+      html += '    <div class="item-footer">Cara bayar: ' + data[i]['png_jawab'] + '</div>';
+      html += '    <div class="item-footer"><br><br><a onclick=\'window.open("' + data[i]['paymentUrl'] + '","_system", "location=yes")\' href=\'javascript:void(0)\' class="button button-large button-round button-outline">Bayar DISINI</a></div>';
+      html += '   </div>';
+      html += '  </div>';
+      html += ' </div>';
+    }
+
+    $$(".sukses-detail").html(html);
+
   });
 
 });

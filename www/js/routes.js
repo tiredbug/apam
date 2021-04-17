@@ -102,6 +102,18 @@ routes = [
     path: '/notifikasi/',
     url: './pages/notifikasi.html',
   },
+  {
+    path: '/telemedicine/',
+    url: './pages/telemedicine.html',
+  },
+  {
+    path: '/telemedicine/:no_rkm_medis/:tanggal/:kd_poli/:nm_poli/:kd_dokter/:nm_dokter/',
+    url: './pages/telemedicine-daftar.html',
+  },
+  {
+    path: '/telemedicine-sukses/',
+    url: './pages/telemedicine-sukses.html',
+  },
   // Color Themes
   {
     path: '/pengaturan/',
