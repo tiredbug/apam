@@ -1,9 +1,9 @@
 //Main configuration. Silahkan sesuaikan settingan dibawah ini sesuai. Baca komentar dibelakangnya
 const nama_instansi = 'RS Masa Kini'; // Hospital Name
-const apiUrl = 'https://khanza.basoro.id/api/'; // API Server URL
-const website_upload = 'https://khanza.basoro.id/uploads/'; // Website Uploads Server URL
-const webapps_url = 'https://khanza.basoro.id/webapps/'; // Webapps Server URL
-const token = 'qtbexUAxzqO3M8dCOo2vDMFvgYjdUEdMLVo341'; // Token code for security purpose
+const apiUrl = 'http://localhost/Khanza-Lite/api/'; // API Server URL
+const website_upload = 'http://localhost/Khanza-Lite/uploads/'; // Website Uploads Server URL
+const webapps_url = 'http://localhost/Khanza-Lite/webapps/'; // Webapps Server URL
+const token = 'lite'; // Token code for security purpose
 const startDate = 0; // Start date of day for registration
 const endDate = 7; // End date of day for registration
 const debug = 1; // Ganti menjadi 0 sebelum build di phonegap.com
@@ -775,6 +775,7 @@ $$(document).on('page:init', '.page[data-name="telemedicine__"]', function(e) {
 
 $$(document).on('page:init', '.page[data-name="telemedicine"]', function(e) {
 
+  var no_rkm_medis = localStorage.getItem("no_rkm_medis");
   var monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus' , 'September' , 'Oktober', 'November', 'Desember'];
   var dayNamesShort = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
 
@@ -893,12 +894,6 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
 
   $$('.page[data-name="telemedicinedaftar"] .daftar-btn').on('click', function () {
 
-    //var no_rkm_medis = localStorage.getItem("no_rkm_medis");
-    //var tanggal = $$('#daftar-form .tanggal').val();
-    //var kd_poli = $$('#daftar-form .kd_poli').val();
-    //var kd_dokter = $$("input[name='kd_dokter']:checked").val();
-    var kd_pj = 'UMU';
-
     if(no_rkm_medis == "") {
       app.dialog.alert('Nomor rekam medis anda tidak sesuai dengan akun login.');
     }
@@ -911,24 +906,20 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
     else if(kd_dokter == "") {
       app.dialog.alert('Silahkan pilih dokter.');
     }
-    else if(kd_pj == "") {
-      app.dialog.alert('Silahkan pilih cara bayar.');
-    }
     else {
       // Show Preloader
       app.dialog.preloader("Loading...");
-
+      console.log(no_rkm_medis);
       app.request.post(apiUrl + 'apam/', {
         action: "telemedicinedaftar",
         no_rkm_medis: no_rkm_medis,
         tanggal: tanggal,
         kd_poli: kd_poli,
         kd_dokter: kd_dokter,
-        kd_pj: kd_pj,
         token: token
       }, function (data) {
-        console.log(data);
         app.dialog.close();
+        app.dialog.alert(data);
         data = JSON.parse(data);
 
         if(data.state == "duplication") {
@@ -983,7 +974,7 @@ $$(document).on('page:init', '.page[data-name="telemedicinesukses"]', function(e
       html += '    <div class="item">Dokter: ' + data[i]['nm_dokter'] + '</div>';
       html += '    <div class="item">Nomor antrian: ' + data[i]['no_reg'] + '</div>';
       html += '    <div class="item-footer">Cara bayar: ' + data[i]['png_jawab'] + '</div>';
-      html += '    <div class="item-footer"><br><br><a onclick=\'window.open("' + data[i]['paymentUrl'] + '","_system", "location=yes")\' href=\'javascript:void(0)\' class="button button-large button-round button-outline">Bayar DISINI</a></div>';
+      html += '    <div class="item-footer"><br><br><a onclick=\'window.open("' + data[i]['paymentUrl'] + '","_blank", "location=yes")\' href=\'javascript:void(0)\' class="button button-large button-round button-outline">Bayar DISINI</a></div>';
       html += '   </div>';
       html += '  </div>';
       html += ' </div>';
