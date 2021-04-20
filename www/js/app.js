@@ -909,7 +909,6 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
     else {
       // Show Preloader
       app.dialog.preloader("Loading...");
-      console.log(no_rkm_medis);
       app.request.post(apiUrl + 'apam/', {
         action: "telemedicinedaftar",
         no_rkm_medis: no_rkm_medis,
@@ -919,7 +918,6 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
         token: token
       }, function (data) {
         app.dialog.close();
-        app.dialog.alert(data);
         data = JSON.parse(data);
 
         if(data.state == "duplication") {
@@ -960,7 +958,6 @@ $$(document).on('page:init', '.page[data-name="telemedicinesukses"]', function(e
   }, function (data) {
     app.dialog.close();
     data = JSON.parse(data);
-    console.log(data);
     var html = '';
     for(i=0; i<data.length; i++) {
       html += ' <div class="item-content">';
