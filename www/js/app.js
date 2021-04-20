@@ -849,7 +849,7 @@ $$(document).on('page:init', '.page[data-name="telemedicine"]', function(e) {
         //var kd_dokter = data[i]['kd_dokter'];
         //console.log(kd_dokter);
         html += '<li>';
-        html += '  <a href="/telemedicine/' + no_rkm_medis + '/' + tanggal + '/' + data[i]['kd_poli'] + '/' + data[i]['nm_poli'] + '/' + data[i]['kd_dokter'] + '/' + data[i]['nm_dokter'] + '/" class="item-link item-content">';
+        html += '  <a href="/telemedicine/' + no_rkm_medis + '/' + tanggal + '/' + data[i]['kd_poli'] + '/' + data[i]['nm_poli'] + '/' + data[i]['kd_dokter'] + '/' + data[i]['nm_dokter'] + '/' + data[i]['biaya'] + '/" class="item-link item-content">';
         html += '  <div class="item-media"><img src="img/' + data[i]['jk'] + '.png" width="44"></div>';
         html += '  <div class="item-inner">';
         html += '   <div class="item-title">';
@@ -889,8 +889,6 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
   $$('#nm_poli').val(nm_poli);
   $$('#kd_dokter').val(kd_dokter);
   $$('#nm_dokter').val(nm_dokter);
-
-  console.log(nm_dokter);
 
   $$('.page[data-name="telemedicinedaftar"] .daftar-btn').on('click', function () {
 
