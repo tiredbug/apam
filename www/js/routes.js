@@ -107,7 +107,7 @@ routes = [
     url: './pages/telemedicine.html',
   },
   {
-    path: '/telemedicine/:no_rkm_medis/:tanggal/:kd_poli/:nm_poli/:kd_dokter/:nm_dokter/',
+    path: '/telemedicine/:no_rkm_medis/:tanggal/:kd_poli/:nm_poli/:kd_dokter/:nm_dokter/:biaya/',
     url: './pages/telemedicine-daftar.html',
   },
   {

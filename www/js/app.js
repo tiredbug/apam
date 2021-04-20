@@ -882,6 +882,11 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
   var nm_poli = page.route.params.nm_poli;
   var kd_dokter = page.route.params.kd_dokter;
   var nm_dokter = page.route.params.nm_dokter;
+  var biaya = page.route.params.biaya;
+
+  var	reverse = biaya.toString().split('').reverse().join(''),
+  	biaya = reverse.match(/\d{1,3}/g);
+  	biaya	= biaya.join('.').split('').reverse().join('');
 
   $$('#no_rkm_medis').val(no_rkm_medis);
   $$('#tanggal').val(tanggal);
@@ -889,6 +894,7 @@ $$(document).on('page:init', '.page[data-name="telemedicinedaftar"]', function(e
   $$('#nm_poli').val(nm_poli);
   $$('#kd_dokter').val(kd_dokter);
   $$('#nm_dokter').val(nm_dokter);
+  $$('#biaya').text(biaya);
 
   $$('.page[data-name="telemedicinedaftar"] .daftar-btn').on('click', function () {
 
