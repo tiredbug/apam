@@ -360,7 +360,7 @@ $$(document).on('page:init', '.page[data-name="postregister"]', function(e) {
           jk: jk,
           token: token
         }, function (data) {
-          //console.log(data);
+          console.log(data);
           app.dialog.close();
           data = JSON.parse(data);
           if(data.state == "invalid") {
